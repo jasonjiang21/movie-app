@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { FaYoutube } from "react-icons/fa";
 
 import Image from "../Image";
+import WatchlistButton from "../WatchlistButton";
 import { IMovie } from "@/types";
 import { useMediaQuery } from "usehooks-ts";
 
@@ -12,7 +13,7 @@ const MovieCard = ({
   movie: IMovie;
   category: string;
 }) => {
-  const { poster_path, original_title: title, name, id } = movie;
+  const { poster_path, original_title: title, name, id, vote_average } = movie as IMovie & { vote_average?: number };
   const isMobile = useMediaQuery("(max-width: 380px)");
   return (
     <>
@@ -33,6 +34,15 @@ const MovieCard = ({
           <div className="xs:text-[48px] text-[42px] text-[#ff0000] scale-[0.4] group-hover:scale-100 transition-all duration-300 ">
             <FaYoutube />
           </div>
+        </div>
+        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-all duration-300">
+          <WatchlistButton
+            id={Number(id)}
+            title={title || name}
+            poster_path={poster_path}
+            vote_average={vote_average || 0}
+            category={category as "movie" | "tv"}
+          />
         </div>
       </Link>
 

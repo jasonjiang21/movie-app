@@ -6,11 +6,12 @@ interface HeaderProps {
   link: { title: string; path: string };
   isNotFoundPage: boolean;
   showBg: boolean;
+  badge?: number;
 }
 
-const HeaderNavItem = ({ link, showBg, isNotFoundPage }: HeaderProps) => {
+const HeaderNavItem = ({ link, showBg, isNotFoundPage, badge }: HeaderProps) => {
   return (
-    <li>
+    <li className="relative">
       <NavLink
         to={link.path}
         className={({ isActive }) => {
@@ -28,6 +29,11 @@ const HeaderNavItem = ({ link, showBg, isNotFoundPage }: HeaderProps) => {
         end
       >
         {link.title}
+        {badge !== undefined && badge > 0 && (
+          <span className="absolute -top-2 -right-3 bg-primary text-white text-[10px] font-bold w-4 h-4 flex items-center justify-center rounded-full">
+            {badge > 9 ? "9+" : badge}
+          </span>
+        )}
       </NavLink>
     </li>
   );
